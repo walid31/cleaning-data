@@ -24,9 +24,26 @@ if df['Identifier'].is_unique:
 # print(df.head())
 
 # Let's do label-based indexing of random row
-print(df.iloc[1])
+# print(df.loc[480])
 
+# Position-based indexing
+# print(df.iloc[0])
 
+print(df.get_dtype_counts())
 
+print(df.loc[1905:, 'Date of Publication'].head(10))
+
+# A particular book can have only one date of publication
+extr = df['Date of Publication'].str.extract(r'^(\d{4})', expand = False)
+# print(extr.head())
+
+print(df['Date of Publication'].isnull().sum() / len(df))
+# get the numerical version
+df['Date of Publication'] = pd.to_numeric(extr)
+print(df['Date of Publication'].dtype)
+
+nan_mean = df['Date of Publication'].isnull().sum() / len(df)
+
+print(nan_mean)
 
 
