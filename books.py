@@ -65,4 +65,6 @@ df['Place of Publication'] = np.where(london, 'London',\
                                        np.where(oxford, 'Oxford',\
                                            pub.str.replace('-',' ')))
 
-print(df['Place of Publication'].head(10))
+# print(df['Place of Publication'].head(10))
+
+
