@@ -37,13 +37,32 @@ print(df.loc[1905:, 'Date of Publication'].head(10))
 extr = df['Date of Publication'].str.extract(r'^(\d{4})', expand = False)
 # print(extr.head())
 
-print(df['Date of Publication'].isnull().sum() / len(df))
 # get the numerical version
 df['Date of Publication'] = pd.to_numeric(extr)
-print(df['Date of Publication'].dtype)
+# print(df['Date of Publication'].dtype)
+
 
 nan_mean = df['Date of Publication'].isnull().sum() / len(df)
+# print(nan_mean)
 
-print(nan_mean)
+# inspect the places of publication
+# print(df['Place of Publication'].head())
 
+# let's take a look at two specific entries
+# print(df.loc[4157862])
+# print(df.loc[4159587])
 
+# Let's see if the places of publication contain the word "London"
+# === if a column contains that word it returns True ===
+pub = df['Place of Publication']
+london = pub.str.contains('London')
+# print(london[:5]) 
+
+oxford = pub.str.contains('Oxford')
+
+# We combine them using Numpy
+df['Place of Publication'] = np.where(london, 'London',\
+                                       np.where(oxford, 'Oxford',\
+                                           pub.str.replace('-',' ')))
+
+print(df['Place of Publication'].head(10))
